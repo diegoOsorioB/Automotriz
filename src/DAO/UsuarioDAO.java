@@ -31,8 +31,8 @@ public class UsuarioDAO
     public int guardarUsu(Connection con, Usuarios usu)
     {
         PreparedStatement pst = null;
-        String sql = "INSERT INTO USUARIOS (ID,ID_ROL,CODIGOUSUARIO,NOMBRE,APELLIDOPAT,TELEFONO,NOMBRE_USUARIO,CONTRASENIA,ESTATUS,FECHA_ALTA)"
-                + "VALUES(USUARIOS_SEQ.NEXTVAL,?,?,?,?,?,?,?,?,SYSDATE)";
+        String sql = "INSERT INTO SEGURIDAD.Usuarios (ID_Usuario, ID_Rol, CodigoUsuario, Nombre, ApellidoP, Telefono, NombreUsuario, Contrasena, Estatus, FechaAlta)" +
+"VALUES (SEGURIDAD.USUARIOS_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)";
 
         try {
             pst = con.prepareStatement(sql);
@@ -55,10 +55,12 @@ public class UsuarioDAO
         }
         catch(SQLException ex){
             msj =0;//OCURRIO UN ERROR AL INSERTAR DATOS
+            System.out.println(ex);
         }catch(Exception exc){
             msj=-1;//ERROR NO ESPERADO
+            System.out.println(exc);
         }
-
+        System.out.println(msj);
         return msj;
     }
 
@@ -66,7 +68,7 @@ public class UsuarioDAO
     {
 
         PreparedStatement pst = null;
-        String sql = "UPDATE USUARIOS SET ID_ROL=?,CODIGOUSUARIO=?,NOMBRE=?,APELLIDOPAT=?,TELEFONO=?,NOMBRE_USUARIO=?,CONTRASENIA=?,ESTATUS=?,FECHA_ALTA=SYSDATE "
+        String sql = "UPDATE SEGURIDAD.USUARIOS SET ID_ROL=?,CODIGOUSUARIO=?,NOMBRE=?,APELLIDOPAT=?,TELEFONO=?,NOMBRE_USUARIO=?,CONTRASENIA=?,ESTATUS=?,FECHA_ALTA=SYSDATE "
                 + "WHERE CODIGOUSUARIO = "+usu.getCodigoUsuario()+"";
 
         try {
@@ -99,7 +101,7 @@ public class UsuarioDAO
         String [] column={"ID","ID_ROL","CODIGO USUARIO","NOMBRE","APELLIDO PAT","TELEFONO","NOMBRE USUARIO","CONTRASEÑA","ESTATUS","FECHA ALTA"};
         model= new DefaultTableModel(null, column);
         
-        String sql = "SELECT * FROM USUARIOS ORDER BY 1";
+        String sql = "SELECT * FROM SEGURIDAD.USUARIOS ORDER BY 1";
         String[] filas=new String[7];
         
         Statement st=null;
@@ -125,7 +127,7 @@ public class UsuarioDAO
         String [] column={"ID","ID_ROL","CODIGO USUARIO","NOMBRE","APELLIDO PAT","TELEFONO","NOMBRE USUARIO","CONTRASEÑA","ESTATUS","FECHA ALTA"};
         model= new DefaultTableModel(null, column);
         
-        String sql = "SELECT * FROM USUARIOS WHERE NOMBRE LIKE '%"+nom+"%' ORDER BY 1";
+        String sql = "SELECT * FROM SEGURIDAD.USUARIOS WHERE NOMBRE LIKE '%"+nom+"%' ORDER BY 1";
         String[] filas=new String[7];
         
         Statement st=null;
@@ -149,7 +151,7 @@ public class UsuarioDAO
     {
         
         
-        String sql = "SELECT * FROM USUARIOS WHERE CODIGOUSUARIO ="+usu.getCodigoUsuario()+" ORDER BY 1";
+        String sql = "SELECT * FROM SEGURIDAD.USUARIOS WHERE CODIGOUSUARIO ="+usu.getCodigoUsuario()+" ORDER BY 1";
        
         
         Statement st=null;
@@ -183,7 +185,7 @@ return 1;
     {
 
         PreparedStatement pst = null;
-        String sql = "DELETE FROM USUARIOS WHERE ID=?";
+        String sql = "DELETE FROM SEGURIDAD.USUARIOS WHERE ID=?";
 
         try {
             pst = con.prepareStatement(sql);
@@ -204,7 +206,7 @@ return 1;
 
         PreparedStatement pst = null;
         ResultSet rs= null;
-        String sql = "SELECT ID_ROL,NOMBRE_USUARIO,CONTRASENIA FROM USUARIOS WHERE NOMBRE_USUARIO=?";
+        String sql = "SELECT ID_ROL,NombreUsuario,Contrasena FROM SEGURIDAD.USUARIOS WHERE NombreUsuario=?";
 
         try {
             pst = con.prepareStatement(sql);
